@@ -2,38 +2,51 @@ name: CI/CD para ML con MLflow
 
 on:
   push:
-    branches:
-      - main
+    branches: [main]
 
 jobs:
-  build:
+  ml_pipeline:
     runs-on: ubuntu-latest
 
+    permissions:
+      contents: write # Permite escribir en el repositorio (git push)
+
     steps:
-    - name: 🔄 Checkout del repositorio
-      uses: actions/checkout@v3
+      - name: 📥 Clonar repositorio
+        uses: actions/checkout@v4
 
-    - name: 🐍 Configurar Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: '3.10'
+      - name: 🐍 Configurar Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
 
-    - name: 📦 Instalar dependencias
-      run: |
-        python -m pip install --upgrade pip
-        pip install -r requirements.txt
+      - name: 📦 Instalar dependencias
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
 
-    - name: 🧹 Ejecutar limpieza de datos
-      run: python clean_data.py
+      - name: 🧼 Limpiar, explorar, entrenar y validar modelo
+        run: make full
 
-    - name: 🤖 Entrenar modelo
-      run: python train.py
+      - name: 📤 Subir modelo .pkl como artefacto (si pasa validación)
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: modelo-pkl
+          path: models/mejor_modelo.pkl
 
-    - name: ✅ Validar modelo
-      run: python validate.py
+      # --- Subir resultados de MLflow ---
+      - name: ⚙️ Configurar Git
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
 
-    - name: 📤 Subir modelo entrenado como artefacto
-      uses: actions/upload-artifact@v3
-      with:
-        name: mejor_modelo
-        path: models/mejor_modelo.pkl
+      - name: ✨ Añadir cambios en mlruns
+        run: git add mlruns
+
+      - name: 📝 Confirmar cambios en mlruns (si existen)
+        run: |
+          git diff --staged --quiet || git commit -m "Actualizar mlruns con resultados de ejecución [skip ci]"
+
+      - name: 🚀 Empujar cambios a main
+        run: git push origin main
