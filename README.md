@@ -2,8 +2,6 @@
 
 Este proyecto construye un pipeline completo de Machine Learning para predecir si un pasajero está satisfecho con su experiencia aérea, utilizando datos reales de encuestas de satisfacción.
 
----
-
 ## Objetivo
 
 Clasificar a los pasajeros en:
@@ -11,8 +9,6 @@ Clasificar a los pasajeros en:
 - **No satisfechos o neutrales**
 
 A partir de factores como clase del vuelo, tipo de viaje, servicio abordo, retrasos, etc.
-
----
 
 ## Estructura del Proyecto
 airline_satisfaction_ml/
@@ -32,14 +28,14 @@ airline_satisfaction_ml/
 ## Ejecución local
 
 1. Clona el repositorio:
-```bash
+
 git clone https://github.com/tu_usuario/airline-satisfaction-ml.git
 cd airline-satisfaction-ml
 
-2. Instala dependencias
+3. Instala dependencias
 pip install -r requirements.txt
 
-3. Ejecuta en orden
+4. Ejecuta en orden
 python clean_data.py
 python train.py
 python validate.py
@@ -56,6 +52,7 @@ Validación final
 Puedes ver los resultados en la pestaña Actions del repo.
 
 ## Resultados (Modelo final: XGBoost)
+
 Métrica	Valor
 Accuracy	95.7%
 F1-score	95.7%
