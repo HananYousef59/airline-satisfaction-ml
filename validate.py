@@ -1,9 +1,10 @@
 import joblib
+import os
 from sklearn.metrics import accuracy_score, f1_score, classification_report, confusion_matrix
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
-import os
+import mlflow
 
 # Crear carpeta de salida si no existe
 os.makedirs("outputs", exist_ok=True)
@@ -14,30 +15,41 @@ modelo = joblib.load("models/mejor_modelo.pkl")
 # Cargar datos de prueba
 X_test, y_test = joblib.load("artifacts/test.pkl")
 
-# Hacer predicciones
-y_pred = modelo.predict(X_test)
+# Iniciar experimento de MLflow
+mlflow.set_experiment("Evaluación Final - Test Set")
 
-# Métricas de evaluación
-acc = accuracy_score(y_test, y_pred)
-f1 = f1_score(y_test, y_pred, average='weighted')
+with mlflow.start_run(run_name="Validación con mejor modelo"):
+    # Predicciones
+    y_pred = modelo.predict(X_test)
 
-print("📊 Evaluación final sobre el conjunto de test:")
-print(f"✅ Accuracy: {acc:.4f}")
-print(f"✅ F1-score: {f1:.4f}")
-print("\n🧾 Reporte de clasificación:")
-print(classification_report(y_test, y_pred, target_names=["No Satisfecho", "Satisfecho"]))
+    # Métricas
+    acc = accuracy_score(y_test, y_pred)
+    f1 = f1_score(y_test, y_pred, average='weighted')
 
-# Matriz de confusión
-cm = confusion_matrix(y_test, y_pred)
+    print("📊 Evaluación final sobre el conjunto de test:")
+    print(f"✅ Accuracy: {acc:.4f}")
+    print(f"✅ F1-score: {f1:.4f}")
+    print("\n🧾 Reporte de clasificación:")
+    print(classification_report(y_test, y_pred, target_names=["No Satisfecho", "Satisfecho"]))
 
-# Visualizar matriz de confusión
-plt.figure(figsize=(6,5))
-sns.heatmap(cm, annot=True, fmt='d', cmap='Blues', 
-            xticklabels=["No Satisfecho", "Satisfecho"],
-            yticklabels=["No Satisfecho", "Satisfecho"])
-plt.title("Matriz de Confusión - Test Set")
-plt.xlabel("Predicción")
-plt.ylabel("Valor real")
-plt.tight_layout()
-plt.savefig("outputs/matriz_confusion_test.png", dpi=300)
-plt.show()
+    # Registrar métricas
+    mlflow.log_metric("accuracy_test", acc)
+    mlflow.log_metric("f1_score_test", f1)
+
+    # Matriz de confusión
+    cm = confusion_matrix(y_test, y_pred)
+
+    # Visualización
+    plt.figure(figsize=(6, 5))
+    sns.heatmap(cm, annot=True, fmt='d', cmap='Blues',
+                xticklabels=["No Satisfecho", "Satisfecho"],
+                yticklabels=["No Satisfecho", "Satisfecho"])
+    plt.title("Matriz de Confusión - Test Set")
+    plt.xlabel("Predicción")
+    plt.ylabel("Valor real")
+    plt.tight_layout()
+
+    path_img = "outputs/matriz_confusion_test.png"
+    plt.savefig(path_img, dpi=300)
+    mlflow.log_artifact(path_img)
+    plt.show()

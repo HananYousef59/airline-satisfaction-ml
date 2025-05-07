@@ -1,5 +1,7 @@
 import joblib
 import os
+import mlflow
+import mlflow.sklearn
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.linear_model import LogisticRegression
 from xgboost import XGBClassifier
@@ -19,30 +21,43 @@ modelos = {
 
 resultados = []
 
-# Entrenar y evaluar cada modelo
-for nombre, modelo in modelos.items():
-    print(f"\n🚀 Entrenando modelo: {nombre}")
-    modelo.fit(X_train, y_train)
-    y_pred = modelo.predict(X_val)
+# Iniciar experimento MLflow
+mlflow.set_experiment("airline_satisfaction")
 
-    acc = accuracy_score(y_val, y_pred)
-    f1 = f1_score(y_val, y_pred, average='weighted')  # puedes cambiar a 'macro' si prefieres
+with mlflow.start_run():
+    for nombre, modelo in modelos.items():
+        print(f"\n🚀 Entrenando modelo: {nombre}")
+        modelo.fit(X_train, y_train)
+        y_pred = modelo.predict(X_val)
 
-    print(f"✅ {nombre} - Accuracy: {acc:.4f} | F1-score: {f1:.4f}")
-    print(classification_report(y_val, y_pred, target_names=["No Satisfecho", "Satisfecho"]))
+        acc = accuracy_score(y_val, y_pred)
+        f1 = f1_score(y_val, y_pred, average='weighted')
 
-    resultados.append({
-        "nombre": nombre,
-        "modelo": modelo,
-        "accuracy": acc,
-        "f1": f1
-    })
+        print(f"✅ {nombre} - Accuracy: {acc:.4f} | F1-score: {f1:.4f}")
+        print(classification_report(y_val, y_pred, target_names=["No Satisfecho", "Satisfecho"]))
 
-# Seleccionar el mejor modelo según F1
-mejor_modelo = max(resultados, key=lambda x: x['f1'])
-print(f"\n🏆 Mejor modelo: {mejor_modelo['nombre']} (F1: {mejor_modelo['f1']:.4f})")
+        # Log de parámetros y métricas en MLflow
+        mlflow.log_param(f"model_{nombre}", modelo.__class__.__name__)
+        mlflow.log_metric(f"{nombre}_accuracy", acc)
+        mlflow.log_metric(f"{nombre}_f1", f1)
 
-# Guardar el mejor modelo
-os.makedirs("models", exist_ok=True)
-joblib.dump(mejor_modelo["modelo"], "models/mejor_modelo.pkl")
-print("💾 Modelo guardado en models/mejor_modelo.pkl")
+        resultados.append({
+            "nombre": nombre,
+            "modelo": modelo,
+            "accuracy": acc,
+            "f1": f1
+        })
+
+    # Seleccionar mejor modelo
+    mejor_modelo = max(resultados, key=lambda x: x['f1'])
+    print(f"\n\U0001F3C6 Mejor modelo: {mejor_modelo['nombre']} (F1: {mejor_modelo['f1']:.4f})")
+
+    # Guardar localmente
+    os.makedirs("models", exist_ok=True)
+    modelo_path = "models/mejor_modelo.pkl"
+    joblib.dump(mejor_modelo["modelo"], modelo_path)
+    print(f"\U0001F4BE Modelo guardado en {modelo_path}")
+
+    # Log del modelo en MLflow
+    mlflow.sklearn.log_model(mejor_modelo["modelo"], "modelo_final")
+    mlflow.log_artifact(modelo_path)
