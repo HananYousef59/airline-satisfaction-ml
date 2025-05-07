@@ -1,0 +1,15 @@
+artifact_uri: file:///home/runner/work/airline-satisfaction-ml/airline-satisfaction-ml/mlruns/390226664756446076/083cce0fac5d4948940fbde2f7d637ec/artifacts
+end_time: 1746659866859
+entry_point_name: ''
+experiment_id: '390226664756446076'
+lifecycle_stage: active
+run_id: 083cce0fac5d4948940fbde2f7d637ec
+run_name: Validación con mejor modelo
+run_uuid: 083cce0fac5d4948940fbde2f7d637ec
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1746659866566
+status: 3
+tags: []
+user_id: runner

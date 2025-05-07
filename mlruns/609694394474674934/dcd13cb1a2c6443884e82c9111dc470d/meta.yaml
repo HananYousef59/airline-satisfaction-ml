@@ -1,0 +1,15 @@
+artifact_uri: file:///home/runner/work/airline-satisfaction-ml/airline-satisfaction-ml/mlruns/dcd13cb1a2c6443884e82c9111dc470d/artifacts
+end_time: 1746659863774
+entry_point_name: ''
+experiment_id: '609694394474674934'
+lifecycle_stage: active
+run_id: dcd13cb1a2c6443884e82c9111dc470d
+run_name: fortunate-lynx-292
+run_uuid: dcd13cb1a2c6443884e82c9111dc470d
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1746659855576
+status: 3
+tags: []
+user_id: runner
