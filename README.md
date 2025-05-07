@@ -29,13 +29,9 @@ airline_satisfaction_ml/
 
 1. Clona el repositorio:
 
-git clone https://github.com/tu_usuario/airline-satisfaction-ml.git
-cd airline-satisfaction-ml
+2. Instala dependencias
 
-3. Instala dependencias
-pip install -r requirements.txt
-
-4. Ejecuta en orden
+3. Ejecuta en orden
 python clean_data.py
 python train.py
 python validate.py
