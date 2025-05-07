@@ -22,6 +22,7 @@ modelos = {
 resultados = []
 
 # Iniciar experimento MLflow
+mlflow.set_tracking_uri("file:./mlruns")  # ✅ Ruta relativa para evitar errores en GitHub Actions
 mlflow.set_experiment("airline_satisfaction")
 
 with mlflow.start_run():
