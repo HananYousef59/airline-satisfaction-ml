@@ -56,7 +56,7 @@ Puedes ver los resultados en la pestaña Actions del repo.
 El modelo se comporta de forma equilibrada para ambas clases y generaliza bien sobre el conjunto de test.
 
 ## Fuente
-Dataset: Kaggle – Airline Passenger Satisfaction
+Dataset: Kaggle – Airline Passenger Satisfaction> https://www.kaggle.com/datasets/teejmahal20/airline-passenger-satisfaction/
 
 ## Notas
 Los archivos .pkl y gráficos están incluidos para evaluación.
