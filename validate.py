@@ -15,7 +15,8 @@ modelo = joblib.load("models/mejor_modelo.pkl")
 # Cargar datos de prueba
 X_test, y_test = joblib.load("artifacts/test.pkl")
 
-# Iniciar experimento de MLflow
+# ✅ Forzar uso de tracking URI local para MLflow
+mlflow.set_tracking_uri("file:./mlruns")
 mlflow.set_experiment("Evaluación Final - Test Set")
 
 with mlflow.start_run(run_name="Validación con mejor modelo"):
