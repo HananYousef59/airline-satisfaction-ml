@@ -1,24 +1,24 @@
-# Makefile para flujo de trabajo ML local
+# Makefile para flujo de trabajo ML completo con MLflow
 
-# Limpieza de datos
-clean:
-	python clean_data.py
-
-# Exploración de datos (genera gráficas en outputs/)
+# Exploración inicial de datos crudos (EDA)
 explore:
 	python explore_data.py
 
-# Entrenamiento de modelos (guarda mejor modelo en models/)
+# Limpieza y partición de datos
+clean:
+	python clean_data.py
+
+# Entrenamiento de modelos y log en mlruns/
 train:
 	python train.py
 
-# Validación final sobre el conjunto de test
+# Evaluación sobre el set de test
 validate:
 	python validate.py
 
-# Ejecutar todo en orden
+# Ejecutar todo el pipeline completo en orden correcto
 full:
-	make clean
 	make explore
+	make clean
 	make train
 	make validate

@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
 
     permissions:
-      contents: write  # Permite subir cambios al repositorio
+      contents: write  # Permite hacer git push
 
     steps:
       - name: 📥 Clonar repositorio
@@ -25,37 +25,28 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: 🧼 Limpiar, explorar, entrenar y validar modelo
+      - name: 🧪 Ejecutar flujo completo (EDA, limpieza, entrenamiento, validación)
         run: make full
 
       - name: 📤 Subir modelo .pkl como artefacto
         if: success()
         uses: actions/upload-artifact@v4
         with:
-          name: modelo-pkl
+          name: mejor_modelo
           path: models/mejor_modelo.pkl
 
-      - name: 📤 Subir matriz de confusión
-        if: success()
-        uses: actions/upload-artifact@v4
-        with:
-          name: matriz-confusion
-          path: outputs/matriz_confusion_test.png
-
-      # --- Registrar cambios de MLflow ---
-      - name: ⚙️ Configurar Git para subir mlruns
+      # --- Subir cambios en mlruns al repositorio ---
+      - name: ⚙️ Configurar Git
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
 
       - name: ✨ Añadir cambios en mlruns
-        run: |
-          git add mlruns || echo "No se encontraron cambios en mlruns"
+        run: git add mlruns
 
-      - name: 📝 Commit si hay cambios en mlruns
+      - name: 📝 Confirmar cambios en mlruns (si existen)
         run: |
           git diff --staged --quiet || git commit -m "Actualizar mlruns con resultados de ejecución [skip ci]"
 
-      - name: 🚀 Push a main
-        run: |
-          git diff --cached --quiet || git push origin main
+      - name: 🚀 Empujar cambios a main
+        run: git push origin main
