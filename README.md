@@ -48,9 +48,10 @@ Puedes ver los resultados en la pestaña Actions del repo.
 
 ## Resultados (Modelo final: XGBoost)
 
-Métrica	Valor
-Accuracy	95.7%
-F1-score	95.7%
+| Métrica   | Valor   |
+|-----------|---------|
+| Accuracy  | 95.7%   |
+| F1-score  | 95.7%   |
 
 El modelo se comporta de forma equilibrada para ambas clases y generaliza bien sobre el conjunto de test.
 
