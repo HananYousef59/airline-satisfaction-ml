@@ -1,0 +1,15 @@
+artifact_uri: file:///home/runner/work/airline-satisfaction-ml/airline-satisfaction-ml/mlruns/845250746422232993/736407b0ad154b80bc73f97cac743de7/artifacts
+end_time: 1746644743290
+entry_point_name: ''
+experiment_id: '845250746422232993'
+lifecycle_stage: active
+run_id: 736407b0ad154b80bc73f97cac743de7
+run_name: Limpieza y división de datos
+run_uuid: 736407b0ad154b80bc73f97cac743de7
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1746644742902
+status: 3
+tags: []
+user_id: runner

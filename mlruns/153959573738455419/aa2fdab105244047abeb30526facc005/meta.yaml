@@ -1,0 +1,15 @@
+artifact_uri: file:///home/runner/work/airline-satisfaction-ml/airline-satisfaction-ml/mlruns/153959573738455419/aa2fdab105244047abeb30526facc005/artifacts
+end_time: 1746644740489
+entry_point_name: ''
+experiment_id: '153959573738455419'
+lifecycle_stage: active
+run_id: aa2fdab105244047abeb30526facc005
+run_name: EDA básica
+run_uuid: aa2fdab105244047abeb30526facc005
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1746644736808
+status: 3
+tags: []
+user_id: runner

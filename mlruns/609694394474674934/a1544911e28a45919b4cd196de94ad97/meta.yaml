@@ -1,0 +1,15 @@
+artifact_uri: file:///home/runner/work/airline-satisfaction-ml/airline-satisfaction-ml/mlruns/a1544911e28a45919b4cd196de94ad97/artifacts
+end_time: 1746644754100
+entry_point_name: ''
+experiment_id: '609694394474674934'
+lifecycle_stage: active
+run_id: a1544911e28a45919b4cd196de94ad97
+run_name: rebellious-cod-684
+run_uuid: a1544911e28a45919b4cd196de94ad97
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1746644745788
+status: 3
+tags: []
+user_id: runner
