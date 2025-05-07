@@ -12,18 +12,17 @@ A partir de factores como clase del vuelo, tipo de viaje, servicio abordo, retra
 
 ## Estructura del Proyecto
 airline_satisfaction_ml/
-│
-├── clean_data.py # Limpieza y codificación de datos
-├── explore_data.py # Visualización y análisis exploratorio
-├── train.py # Entrenamiento de múltiples modelos
-├── validate.py # Evaluación final del mejor modelo
-│
-├── artifacts/ # Datos limpios serializados (.pkl)
-├── models/ # Modelo final guardado
-├── outputs/ # Gráficas de análisis y evaluación
-├── requirements.txt # Dependencias del proyecto
-│
-└── .github/workflows/ml_ci.yml # Workflow CI/CD con GitHub Actions
+
+- `clean_data.py` → Limpieza y codificación de los datos
+- `explore_data.py` → Análisis exploratorio y visualización
+- `train.py` → Entrenamiento de modelos (Random Forest, Regresión Logística, XGBoost)
+- `validate.py` → Evaluación final sobre el conjunto de test
+- `requirements.txt` → Lista de dependencias
+- `artifacts/` → Datos preprocesados serializados (.pkl)
+- `models/` → Modelo final guardado (`mejor_modelo.pkl`)
+- `outputs/` → Gráficas generadas por el análisis y evaluación
+- `.github/workflows/ml_ci.yml` → CI/CD automático con GitHub Actions
+
 
 ## Ejecución local
 
