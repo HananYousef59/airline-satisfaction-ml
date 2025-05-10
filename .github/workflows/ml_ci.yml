@@ -8,8 +8,8 @@ jobs:
   ml_pipeline:
     runs-on: ubuntu-latest
 
-    permissions:
-      contents: write  # Permite hacer git push
+    #permissions:
+      #contents: write  # Permite hacer git push
 
     steps:
       - name: 📥 Clonar repositorio
