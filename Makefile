@@ -16,9 +16,14 @@ train:
 validate:
 	python validate.py
 
+# Subir modelo a Hugging Face
+upload:
+	python upload_model.py
+
 # Ejecutar todo el pipeline completo en orden correcto
 full:
 	make explore
 	make clean
 	make train
 	make validate
+	make upload
